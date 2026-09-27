@@ -1,0 +1,14 @@
+{
+  "prodi": "Pendidikan Bahasa Inggris",
+  "dosen": "Dr. Siti Contoh, M.Pd.",
+  "semester_kelas": "5 / ..........",
+  "tahun_akademik": "20... / 20...",
+  "jumlah_pertemuan": 16,
+  "tanggal_penutup": ".........................",
+  "baris": [
+    {"no": 1, "hari": "", "tanggal": "", "jam": "", "makul": "Reading Comprehension", "pokok_bahasan": "Kontrak kuliah & pengantar reading skills"},
+    {"no": 2, "hari": "", "tanggal": "", "jam": "", "makul": "Reading Comprehension", "pokok_bahasan": "Skimming dan scanning"},
+    {"no": 3, "hari": "", "tanggal": "", "jam": "", "makul": "Reading Comprehension", "pokok_bahasan": "Main idea dan supporting details"},
+    {"no": 8, "hari": "", "tanggal": "", "jam": "", "makul": "Reading Comprehension", "pokok_bahasan": "UTS"}
+  ]
+}
