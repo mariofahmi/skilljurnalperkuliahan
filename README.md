@@ -6,7 +6,7 @@
 [![Evaluasi](https://img.shields.io/badge/Rencana-16%20Pertemuan-06b6d4.svg)](https://mariofahmi.github.io/skilljurnalperkuliahan/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Official skill and automation agent in **Google Antigravity & Agentic AI** for generating, previewing, and exporting official **Jurnal Perkuliahan (16 Pertemuan)** adhering to the master standard of Faculty of Teacher Training and Education (FKIP) Universitas PGRI Ronggolawe (UNIROW) Tuban.
+Official skill and automation agent in **Google Antigravity & Agentic AI** for generating, previewing, and exporting official **Jurnal Perkuliahan (16 Pertemuan)** 
 
 🚀 **Web Simulator & Preview Portal:** [https://mariofahmi.github.io/skilljurnalperkuliahan/](https://mariofahmi.github.io/skilljurnalperkuliahan/)
 
