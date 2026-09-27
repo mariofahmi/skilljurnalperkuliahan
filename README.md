@@ -1,4 +1,4 @@
-# Skill Jurnal Perkuliahan UNIROW Tuban (FKIP)
+# Skill Jurnal Perkuliahan 
 
 [![Antigravity Skill](https://img.shields.io/badge/Antigravity-Skill-10b981.svg)](https://github.com/mariofahmi/skilljurnalperkuliahan)
 [![Template](https://img.shields.io/badge/Template-UNIROW%20FKIP-059669.svg)](https://unirow.ac.id)
