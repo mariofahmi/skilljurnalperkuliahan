@@ -21,7 +21,8 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- DOCX CDN Library for in-browser Word generation -->
-  <script src="https://unpkg.com/docx@8.2.3/build/index.js"></script>
+  <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+  <script>if (typeof docx === 'undefined') { document.write('<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"><\\/script>'); }</script>
 
   <style>
     :root {
@@ -1139,22 +1140,26 @@
         const tahun = document.getElementById('inpTahun').value.trim();
         const tglPenutup = document.getElementById('inpTanggalPenutup').value.trim();
 
-        const FONT = "Calibri";
+        const FONT = "Times New Roman";
         const tableWidth = 9746; // full width 17.2 cm in twips
         const noBorders = {
           top: { style: BorderStyle.NONE, size: 0, color: "auto" },
           bottom: { style: BorderStyle.NONE, size: 0, color: "auto" },
           left: { style: BorderStyle.NONE, size: 0, color: "auto" },
           right: { style: BorderStyle.NONE, size: 0, color: "auto" },
+          insideHorizontal: { style: BorderStyle.NONE, size: 0, color: "auto" },
+          insideVertical: { style: BorderStyle.NONE, size: 0, color: "auto" },
         };
         const tableBorders = {
           top: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
           bottom: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
           left: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
           right: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
+          insideHorizontal: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
+          insideVertical: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
         };
 
-        // 1. KOP Table
+        // 1. KOP Table (3 Kolom Simetris Berlogo)
         const logoImgData = document.getElementById('kopLogoImg').src.split(',')[1];
         const logoBytes = Uint8Array.from(atob(logoImgData), c => c.charCodeAt(0));
 
@@ -1187,11 +1192,11 @@
                   borders: noBorders,
                   margins: { top: 0, bottom: 0, left: 0, right: 0 },
                   children: [
-                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 220 }, children: [new TextRun({ text: "YAYASAN PEMBINA LEMBAGA PENDIDIKAN PERGURUAN TINGGI PGRI TUBAN", font: "Arial", size: 18 })] }),
-                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 220 }, children: [new TextRun({ text: "UNIVERSITAS PGRI RONGGOLAWE (UNIROW) TUBAN", bold: true, font: "Arial", size: 20 })] }),
-                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 220 }, children: [new TextRun({ text: "FAKULTAS KEGURUAN DAN ILMU PENDIDIKAN (FKIP)", bold: true, font: "Arial", size: 21 })] }),
-                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 200 }, children: [new TextRun({ text: "Jl. Manunggal No. 61 Tuban Telp. (0356) 322233 Fax. (0356) 331578", font: "Arial", size: 14 })] }),
-                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 200 }, children: [new TextRun({ text: "Website: www.unirow.ac.id, Email: prospective@unirow.ac.id", font: "Arial", size: 14 })] }),
+                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 220 }, children: [new TextRun({ text: "YAYASAN PEMBINA LEMBAGA PENDIDIKAN PERGURUAN TINGGI PGRI TUBAN", font: FONT, size: 18 })] }),
+                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 220 }, children: [new TextRun({ text: "UNIVERSITAS PGRI RONGGOLAWE (UNIROW) TUBAN", bold: true, font: FONT, size: 20 })] }),
+                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 220 }, children: [new TextRun({ text: "FAKULTAS KEGURUAN DAN ILMU PENDIDIKAN (FKIP)", bold: true, font: FONT, size: 21 })] }),
+                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 200 }, children: [new TextRun({ text: "Jl. Manunggal No. 61 Tuban Telp. (0356) 322233 Fax. (0356) 331578", font: FONT, size: 14 })] }),
+                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 200 }, children: [new TextRun({ text: "Website: www.unirow.ac.id, Email: prospective@unirow.ac.id", font: FONT, size: 14 })] }),
                   ],
                 }),
                 new TableCell({
@@ -1207,7 +1212,7 @@
 
         // Double Border Divider
         const kopDivider = new Paragraph({
-          spacing: { before: 50, after: 120 },
+          spacing: { before: 50, after: 100 },
           border: {
             bottom: { style: BorderStyle.DOUBLE, size: 12, color: "000000" },
           },
@@ -1232,7 +1237,7 @@
                 new TableCell({
                   columnSpan: 3,
                   borders: noBorders,
-                  margins: { top: 0, bottom: 40, left: 0, right: 0 },
+                  margins: { top: 0, bottom: 30, left: 0, right: 0 },
                   children: [
                     new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 240 }, children: [new TextRun({ text: "JURNAL PERKULIAHAN", bold: true, font: FONT, size: 24 })] }),
                     new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 240 }, children: [new TextRun({ text: tahun ? `TAHUN AKADEMIK ${tahun}` : "TAHUN AKADEMIK 20... / 20...", bold: true, font: FONT, size: 22 })] }),
@@ -1242,9 +1247,9 @@
             }),
             ...idData.map(([label, val]) => new TableRow({
               children: [
-                new TableCell({ width: { size: 2200, type: WidthType.DXA }, borders: noBorders, margins: { top: 20, bottom: 20, left: 0, right: 0 }, children: [new Paragraph({ spacing: { line: 220 }, children: [new TextRun({ text: label, font: FONT, size: 19 })] })] }),
-                new TableCell({ width: { size: 250, type: WidthType.DXA }, borders: noBorders, margins: { top: 20, bottom: 20, left: 0, right: 0 }, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 220 }, children: [new TextRun({ text: ":", font: FONT, size: 19 })] })] }),
-                new TableCell({ width: { size: 7296, type: WidthType.DXA }, borders: noBorders, margins: { top: 20, bottom: 20, left: 0, right: 0 }, children: [new Paragraph({ spacing: { line: 220 }, children: [new TextRun({ text: val, font: FONT, size: 19 })] })] }),
+                new TableCell({ width: { size: 2200, type: WidthType.DXA }, borders: noBorders, margins: { top: 15, bottom: 15, left: 0, right: 0 }, children: [new Paragraph({ spacing: { line: 200 }, children: [new TextRun({ text: label, font: FONT, size: 19 })] })] }),
+                new TableCell({ width: { size: 250, type: WidthType.DXA }, borders: noBorders, margins: { top: 15, bottom: 15, left: 0, right: 0 }, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 200 }, children: [new TextRun({ text: ":", font: FONT, size: 19 })] })] }),
+                new TableCell({ width: { size: 7296, type: WidthType.DXA }, borders: noBorders, margins: { top: 15, bottom: 15, left: 0, right: 0 }, children: [new Paragraph({ spacing: { line: 200 }, children: [new TextRun({ text: val, font: FONT, size: 19 })] })] }),
               ],
             })),
           ],
@@ -1260,7 +1265,8 @@
           children: headers.map((h, i) => new TableCell({
             width: { size: colWidths[i], type: WidthType.DXA },
             borders: tableBorders,
-            margins: { top: 60, bottom: 60, left: 50, right: 50 },
+            shading: { fill: "E2E2E2" },
+            margins: { top: 50, bottom: 50, left: 40, right: 40 },
             children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: h, bold: true, font: FONT, size: 19 })] })],
           })),
         });
@@ -1268,18 +1274,19 @@
         const dataRows = currentCourse.baris.map(b => new TableRow({
           cantSplit: true,
           children: [
-            new TableCell({ width: { size: colWidths[0], type: WidthType.DXA }, borders: tableBorders, margins: { top: 35, bottom: 35, left: 40, right: 40 }, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 240 }, children: [new TextRun({ text: String(b.no), font: FONT, size: 17 })] })] }),
-            new TableCell({ width: { size: colWidths[1], type: WidthType.DXA }, borders: tableBorders, margins: { top: 35, bottom: 35, left: 40, right: 40 }, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 240 }, children: [new TextRun({ text: b.hari || "", font: FONT, size: 17 })] })] }),
-            new TableCell({ width: { size: colWidths[2], type: WidthType.DXA }, borders: tableBorders, margins: { top: 35, bottom: 35, left: 40, right: 40 }, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 240 }, children: [new TextRun({ text: b.tanggal || "", font: FONT, size: 17 })] })] }),
-            new TableCell({ width: { size: colWidths[3], type: WidthType.DXA }, borders: tableBorders, margins: { top: 35, bottom: 35, left: 40, right: 40 }, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 240 }, children: [new TextRun({ text: b.jam || "", font: FONT, size: 17 })] })] }),
-            new TableCell({ width: { size: colWidths[4], type: WidthType.DXA }, borders: tableBorders, margins: { top: 35, bottom: 35, left: 40, right: 40 }, children: [new Paragraph({ alignment: AlignmentType.LEFT, spacing: { line: 240 }, children: [new TextRun({ text: mk, font: FONT, size: 17 })] })] }),
-            new TableCell({ width: { size: colWidths[5], type: WidthType.DXA }, borders: tableBorders, margins: { top: 35, bottom: 35, left: 40, right: 40 }, children: [new Paragraph({ alignment: AlignmentType.LEFT, spacing: { line: 240 }, children: [new TextRun({ text: b.pokok_bahasan || "", font: FONT, size: 17 })] })] }),
+            new TableCell({ width: { size: colWidths[0], type: WidthType.DXA }, borders: tableBorders, margins: { top: 20, bottom: 20, left: 30, right: 30 }, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 200 }, children: [new TextRun({ text: String(b.no), font: FONT, size: 16 })] })] }),
+            new TableCell({ width: { size: colWidths[1], type: WidthType.DXA }, borders: tableBorders, margins: { top: 20, bottom: 20, left: 30, right: 30 }, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 200 }, children: [new TextRun({ text: b.hari || "", font: FONT, size: 16 })] })] }),
+            new TableCell({ width: { size: colWidths[2], type: WidthType.DXA }, borders: tableBorders, margins: { top: 20, bottom: 20, left: 30, right: 30 }, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 200 }, children: [new TextRun({ text: b.tanggal || "", font: FONT, size: 16 })] })] }),
+            new TableCell({ width: { size: colWidths[3], type: WidthType.DXA }, borders: tableBorders, margins: { top: 20, bottom: 20, left: 30, right: 30 }, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 200 }, children: [new TextRun({ text: b.jam || "", font: FONT, size: 16 })] })] }),
+            new TableCell({ width: { size: colWidths[4], type: WidthType.DXA }, borders: tableBorders, margins: { top: 20, bottom: 20, left: 30, right: 30 }, children: [new Paragraph({ alignment: AlignmentType.LEFT, spacing: { line: 200 }, children: [new TextRun({ text: mk, font: FONT, size: 16 })] })] }),
+            new TableCell({ width: { size: colWidths[5], type: WidthType.DXA }, borders: tableBorders, margins: { top: 20, bottom: 20, left: 30, right: 30 }, children: [new Paragraph({ alignment: AlignmentType.LEFT, spacing: { line: 200 }, children: [new TextRun({ text: b.pokok_bahasan || "", font: FONT, size: 16 })] })] }),
           ],
         }));
 
         const jurnalTable = new Table({
           width: { size: tableWidth, type: WidthType.DXA },
           columnWidths: colWidths,
+          borders: tableBorders,
           rows: [headerRow, ...dataRows],
         });
 
@@ -1296,16 +1303,16 @@
                   borders: noBorders,
                   margins: { top: 0, bottom: 0, left: 0, right: 0 },
                   children: [
-                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 260 }, children: [new TextRun({ text: "Mengetahui,", font: FONT, size: 20 }), new TextRun({ text: "Ketua Program Studi", font: FONT, size: 20, break: 1 })] }),
-                    new Paragraph({ spacing: { before: 750, after: 0 }, alignment: AlignmentType.CENTER, children: [new TextRun({ text: kaprodi, bold: true, underline: { type: docx.UnderlineType.SINGLE }, font: FONT, size: 20 })] }),
+                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 240 }, children: [new TextRun({ text: "Mengetahui,", font: FONT, size: 19 }), new TextRun({ text: "Ketua Program Studi", font: FONT, size: 19, break: 1 })] }),
+                    new Paragraph({ spacing: { before: 500, after: 0 }, alignment: AlignmentType.CENTER, children: [new TextRun({ text: kaprodi, bold: true, underline: { type: docx.UnderlineType.SINGLE }, font: FONT, size: 19 })] }),
                   ],
                 }),
                 new TableCell({
                   borders: noBorders,
                   margins: { top: 0, bottom: 0, left: 0, right: 0 },
                   children: [
-                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 260 }, children: [new TextRun({ text: tglPenutup ? `Tuban, ${tglPenutup}` : "Tuban, .........................", font: FONT, size: 20 }), new TextRun({ text: "Dosen Pengampu,", font: FONT, size: 20, break: 1 })] }),
-                    new Paragraph({ spacing: { before: 750, after: 0 }, alignment: AlignmentType.CENTER, children: [new TextRun({ text: dosen || "........................................", bold: true, underline: { type: docx.UnderlineType.SINGLE }, font: FONT, size: 20 })] }),
+                    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 240 }, children: [new TextRun({ text: tglPenutup ? `Tuban, ${tglPenutup}` : "Tuban, .........................", font: FONT, size: 19 }), new TextRun({ text: "Dosen Pengampu,", font: FONT, size: 19, break: 1 })] }),
+                    new Paragraph({ spacing: { before: 500, after: 0 }, alignment: AlignmentType.CENTER, children: [new TextRun({ text: dosen || "........................................", bold: true, underline: { type: docx.UnderlineType.SINGLE }, font: FONT, size: 19 })] }),
                   ],
                 }),
               ],
@@ -1318,16 +1325,16 @@
             properties: {
               page: {
                 size: { width: 11906, height: 16838 },
-                margin: { top: 850, right: 1080, bottom: 850, left: 1080 },
+                margin: { top: 650, right: 1080, bottom: 650, left: 1080 },
               },
             },
             children: [
               kopTable,
               kopDivider,
               idTable,
-              new Paragraph({ spacing: { before: 0, after: 60 }, children: [] }),
+              new Paragraph({ spacing: { before: 0, after: 40 }, children: [] }),
               jurnalTable,
-              new Paragraph({ spacing: { before: 120, after: 0 }, children: [] }),
+              new Paragraph({ spacing: { before: 80, after: 0 }, children: [] }),
               sigTable,
             ],
           }],
